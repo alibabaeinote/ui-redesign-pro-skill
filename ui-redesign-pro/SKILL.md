@@ -82,8 +82,6 @@ The skeleton (screen organization, grouping, navigation model, component set) is
 
 ---
 
----
-
 # Stage 1. Evaluate the current visual usability
 
 Redesign: judge what exists, in numbers and facts, not taste. New design: this stage is the brief.
@@ -107,8 +105,6 @@ Record the language and direction of the product as a Fact with evidence: script
   - **Interactive web UI:** one self-contained HTML or React artifact. For award-level marketing sites also consult `top-design`; for a theme across several artifacts, `theme-factory`.
   - **Static graphic:** `canvas-design`, `pdf` or `pptx`, passing the decided palette, type pairing and layout motif.
   - If unclear, infer from the wording and state the assumption (or fold it into the single question in A4.4).
-
----
 
 ## 1.3 Evaluate the current design (or frame the brief)
 
@@ -157,8 +153,6 @@ Rules:
 - **Screen-type playbook.** For each screen type classified in Stage 2, write 5 to 8 proven practices (and extend its 3 to 5 failure modes), from the benchmark and established guidance, and apply them unless the original's content makes them impossible. Examples: checkout cuts fields, shows the total and trust cues early, and keeps the primary action reachable; a dashboard leads with the one key number, supports comparison and drill-down, and avoids chart junk; a form uses a single column, inline validation and clear error recovery; a list supports scanning with one consistent row anatomy. Feed the playbook into the decisions table of the management report (5.2).
 - Define one **signature idea**: a single product-specific visual or interaction concept (a type treatment, shape language, motion motif), justified by user value and kept systematic so it scales.
 
----
-
 ## 3.2 Diverge: three versions, freely
 
 Produce three better versions that differ **strongly in structure**: they must differ on at least 3 of these 5 axes: organization and grouping, navigation or flow model, component set, primary interaction, information density. Three recolors or restyles of one skeleton count as one version. At Change Dial level 1, directions may be narrower variations of the refinement strategy.
@@ -185,8 +179,6 @@ The goal is to harvest, not to crown one winner. For each version list its 1 to 
 - Decide and explain in 2 to 3 sentences, and record why alternatives were rejected. Show finalists only when the choice truly depends on the user's preference and the criteria cannot settle it.
 - The combined version must visibly draw on all three. Picking one version and borrowing a detail does not satisfy this step. Only the combined version is developed to full fidelity.
 
----
-
 ## 4.2 Converge: refine the combined version for usability
 
 In this order, and write down what changed:
@@ -198,7 +190,7 @@ In this order, and write down what changed:
 5. **Legibility and scanning.** Readable sizes and line-height, short lines (about 45 to 75 characters), aligned edges, grouping by space, key data (numbers, status, dates, prices) prominent.
 6. **Contrast, computed** with the tool in Part I. Primary text and key actions aim for 7:1 or more, secondary text at least 4.5:1, icons, control borders and focus rings at least 3:1. Decorative hairlines are exempt but must not carry meaning. Never rely on color alone.
 7. **Ergonomics.** Targets at least 44x44pt (iOS), 48x48dp (Android) or 24x24 CSS px (WCAG 2.2 AA floor), larger for primary actions; spacing between targets; one-hand reach; destructive actions separated and confirmed or undoable.
-8. **Component and navigation upgrade (inside the fixed skeleton).** Swap or redesign components and local navigation paths without changing the skeleton chosen in 4.1. If you find a skeleton-level problem, go back to 4.1 once, fix it there, and continue. For each component and each navigation path ask: is this the best-practice choice for its job? Redesign or replace it when an numbered problem justifies it (usability, learnability, findability). Check that every function is still reachable, that frequent tasks take no more steps than before (count them), that labels are visible and first-use guidance exists where learnability was weak, and that navigation answers where am I, where can I go and how do I go back. Record each replacement as before, after, reason and source (for example Nielsen, WCAG, Material, HIG, Baymard); cite only sources you opened.
+8. **Component and navigation upgrade (inside the fixed skeleton).** Swap or redesign components and local navigation paths without changing the skeleton chosen in 4.1. If you find a skeleton-level problem, go back to 4.1 once, fix it there, and continue. For each component and each navigation path ask: is this the best-practice choice for its job? Redesign or replace it when a numbered problem justifies it (usability, learnability, findability). Check that every function is still reachable, that frequent tasks take no more steps than before (count them), that labels are visible and first-use guidance exists where learnability was weak, and that navigation answers where am I, where can I go and how do I go back. Record each replacement as before, after, reason and source (for example Nielsen, WCAG, Material, HIG, Baymard); cite only sources you opened.
 
 ## 4.3 Raise every level
 
@@ -265,8 +257,6 @@ Create a new design system for the redesign unless the user says to follow the c
 - **Components:** for each, anatomy, variants, sizes, the full state matrix (default, hover, focus-visible, pressed, disabled, loading, error, success, selected, empty), content rules and responsive behavior.
 - Persist everything in the design-system file (Part I).
 
----
-
 ## 4.7 Build
 
 **All targets:** every value maps to a token or a component variant; no magic numbers. Layout is auto-layout, flex or grid logic with constraints, not pixel positions. Content survives stress: 2x longer strings, very short strings, large numbers, missing images, 0, 1 and many items, error and offline, skeletons that match the final layout, text scaling to 200%.
@@ -283,8 +273,6 @@ Create a new design system for the redesign unless the user says to follow the c
 **Static graphic:** hand off to `canvas-design`, `pdf` or `pptx` with the decided palette, type pairing and layout motif.
 
 **Buildability:** note component-to-code hints, responsive rules, accessible markup (roles, labels, focus order), asset export specs, and anything costly to implement with a cheaper equivalent. List the next 5 to 10 likely screens or patterns the system must cover.
-
----
 
 ## 4.8 Pixel-perfect pass (measured, not asserted)
 
@@ -346,8 +334,6 @@ End with one line: the decision requested from the managers.
 **New design mode:** there is no audit, so section 1 becomes "Brief and risks" (the user problem, the constraints, and the 3 biggest design risks), and section 4 lists the checks without before and after numbers.
 
 **Rules:** no hype and no superlatives; no claims of tested results you do not have; no invented numbers (every number is computed or labeled as an estimate); never cite a source you did not open; out-of-scope ideas are listed as proposals, never as delivered changes; effort is stated as low, medium or high with a reason, never invented hours.
-
----
 
 ---
 
