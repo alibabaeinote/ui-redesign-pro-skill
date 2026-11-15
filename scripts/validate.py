@@ -41,11 +41,16 @@ for r in sorted(referenced - existing):
 for r in sorted(existing - referenced):
     errors.append(f"present but never referenced: references/{r}")
 
-# Step numbering: steps 0..13 each appear exactly once as a heading.
-steps = re.findall(r"^## Step (\d+)\.", text, re.M)
-if sorted(map(int, steps)) != list(range(0, 14)):
-    errors.append(f"step headings are {steps}, expected 0 to 13 once each")
-
+# Structure: five stages, each once, in order, with the expected sub-sections.
+stages = re.findall(r"^# Stage (\d+)\.", text, re.M)
+if list(map(int, stages)) != [1, 2, 3, 4, 5]:
+    errors.append(f"stage headings are {stages}, expected 1 to 5 once each, in order")
+expected_subs = ["1.1", "1.2", "1.3", "3.1", "3.2"] + [f"4.{i}" for i in range(1, 10)] + ["5.1", "5.2"]
+subs = re.findall(r"^## (\d\.\d) ", text, re.M)
+if subs != expected_subs:
+    errors.append(f"sub-sections are {subs}, expected {expected_subs}")
+if re.search(r"^## Step \d+\.", text, re.M):
+    errors.append("old 'Step N' headings still present")
 # Personal-data guard.
 for pat in [r"this user's own", r"@gmail\.com", r"alibabaei\.art"]:
     if re.search(pat, text):
@@ -56,4 +61,4 @@ if errors:
     for e in errors:
         print(" -", e)
     sys.exit(1)
-print("OK: frontmatter, references, step numbering, personal-data guard")
+print("OK: frontmatter, references, five-stage structure, personal-data guard")

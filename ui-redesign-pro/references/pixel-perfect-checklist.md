@@ -1,4 +1,4 @@
-# Pixel-Perfect Checklist (final pass, step 10 and step 11)
+# Pixel-Perfect Checklist (final pass, 4.8 and 4.9)
 
 Run the sections that apply. Each line is a pass or fail test. Label results "measured" or "computed, not rendered". Name every exception and say why it is intentional.
 

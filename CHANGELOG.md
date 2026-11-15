@@ -1,9 +1,13 @@
 # Changelog
 
-## Unreleased
-- Added `evaluation/` kit (briefs, prompts, blinding and aggregation scripts, self-test in CI). No results yet.
+## 0.10.0 - 2026-11-15
+- **Restructured the method into five stages** (was steps 0 to 13): 1 evaluate current visual usability, 2 list the serious problems, 3 three better and strongly different solutions, 4 choose and combine the best and improve every level, 5 brief defense document. All earlier rules were kept and moved under these stages; section numbers changed (for example old step 13 is now 5.2).
+- New: Stage 2 owns the numbered problem list and baseline metrics; each of the three versions must carry a problem map and differ on at least 3 of 5 axes; new 4.3 (raise every level, including microcopy rules) and 4.4 (closure table for every P).
+- Changed the Commitment: microcopy wording may be improved when it fixes a numbered problem, meaning unchanged; every changed string is listed.
+- Validator now checks the five-stage structure.
+- Added `evaluation/` kit (briefs, prompts, blinding and aggregation scripts, self-test in CI) and a first automated A/B run on 5 synthetic screens, metrics only, no human raters: `evaluation/RESULTS-v0.9.0.md`. That run tested the 0.9.0 step structure, not this one.
 
-Format: [Semantic Versioning](https://semver.org). MAJOR = the Commitment (A4) or the output structure changes. MINOR = a new step or rule. PATCH = wording or fixes.
+Format: [Semantic Versioning](https://semver.org). MAJOR = the Commitment (A4) or the output structure changes. MINOR = a new stage, step or rule. PATCH = wording or fixes.
 
 ## 0.9.0 - 2026-11-15
 First public release candidate. Not yet validated on real projects; stays 0.x until it has been run on at least 3 real screens and the results are published.

@@ -10,6 +10,6 @@ labels: bug
 
 **What it should have done, and why:**
 
-**Rule involved** (section or step number, for example A4.1 or step 6.8):
+**Rule involved** (section or section number, for example A4.1 or 4.2):
 
 **Evidence** (screenshots, the P-list, the management report):

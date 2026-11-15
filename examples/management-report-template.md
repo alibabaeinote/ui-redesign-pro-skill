@@ -1,4 +1,4 @@
-# Management report template (step 13)
+# Management report template (Stage 5.2)
 
 One page, about 350 to 500 words. Fill every field with a measured value or label it Fact / Inference / Assumption. No invented numbers.
 

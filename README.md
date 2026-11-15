@@ -8,7 +8,7 @@ A Claude skill that redesigns or designs UI screens through a fixed, checkable p
 
 **What it commits to.** Content, topic, purpose, business goal, audience and every function inside the UI stay the same. The original visual style is not carried over unless your brief names it. Components and navigation may be redesigned or replaced by best-practice ones when that improves usability, learnability or navigation.
 
-**Status.** Version 0.9.0. Not yet validated on real projects; see CHANGELOG.
+**Status.** Version 0.10.0. Not yet validated on real projects; see CHANGELOG.
 
 ### Install
 Copy the `ui-redesign-pro/` folder into your skills directory (for Claude Code: `~/.claude/skills/`). Uploading a zip in the Claude app settings may also work; this has not been tested.
@@ -33,7 +33,7 @@ MIT. See `LICENSE`.
 
 **تعهد اسکیل.** محتوا، موضوع، هدف صفحه، هدف کسب‌وکار، مخاطب و همه‌ی قابلیت‌های داخل UI ثابت می‌ماند. سبک بصری قبلی نگه داشته نمی‌شود، مگر در بریف نام برده شود. کامپوننت‌ها و ناوبری در صورت بهبود کاربردپذیری یا آموزش‌پذیری می‌توانند بازطراحی یا با بهترین‌روش (best practice) جایگزین شوند.
 
-**وضعیت.** نسخه‌ی 0.9.0. هنوز روی پروژه‌ی واقعی اعتبارسنجی نشده است. جزئیات در CHANGELOG.
+**وضعیت.** نسخه‌ی 0.10.0. هنوز روی پروژه‌ی واقعی اعتبارسنجی نشده است. جزئیات در CHANGELOG.
 
 ### نصب
 پوشه‌ی `ui-redesign-pro/` را در پوشه‌ی اسکیل‌ها کپی کنید (برای Claude Code مسیر `~/.claude/skills/`). آپلود zip در تنظیمات اپ Claude هم ممکن است کار کند، ولی امتحان نشده است.
