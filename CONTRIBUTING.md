@@ -19,3 +19,7 @@ Thank you for helping improve UI Redesign Pro. This is a text-based skill, so a 
 - Keep the one-voice rule (A2): quieter, clearer, more exact wins.
 - Do not add personal information, client names or private URLs.
 - Persian text: keep numerals Latin, put Latin terms in parentheses after the Persian equivalent.
+
+## Sync from the account skill (one way, cloud to repo)
+
+The skill is edited in the owner's Claude account. A scheduled task copies `SKILL.md` into this repo when the account copy changes: it runs `scripts/sync_from_cloud.py`, which compares a hash against `.cloud-sync-hash`, validates, and only then updates the file. Edits to `references/`, `docs/`, `evaluation/` and everything else are made in the repo and do not flow back to the account.
