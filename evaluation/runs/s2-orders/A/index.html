@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orders</title>
+<style>
+:root{
+  --bg:#f6f7f9;--surface:#fff;--ink:#111827;--ink-2:#4b5563;--ink-3:#6b7280;
+  --line:#e5e7eb;--line-2:#f0f1f4;--brand:#2b6cf0;--brand-ink:#1d4fc4;--brand-tint:#eef3fe;
+  --nav:#0f172a;--nav-ink:#94a3b8;
+  --ok-bg:#e7f6ec;--ok-ink:#17653a;--pend-bg:#fff3dc;--pend-ink:#8a5200;--bad-bg:#fde8e8;--bad-ink:#a42121;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.top{background:var(--nav);height:56px;display:flex;align-items:center;padding:0 32px;gap:32px}
+.brand{color:#fff;font-weight:700;font-size:16px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand i{width:22px;height:22px;border-radius:6px;background:var(--brand);display:inline-block}
+.nav{display:flex;gap:4px;height:100%}
+.nav a{display:flex;align-items:center;padding:0 14px;color:var(--nav-ink);text-decoration:none;font-weight:500;position:relative}
+.nav a:hover{color:#fff}
+.nav a[aria-current]{color:#fff}
+.nav a[aria-current]::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--brand)}
+
+.wrap{max-width:1216px;margin:0 auto;padding:32px}
+.head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px}
+h1{font-size:28px;line-height:1.2;letter-spacing:-.02em;margin:0;font-weight:700}
+.count{color:var(--ink-3);font-size:14px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(16,24,40,.04);overflow:hidden}
+.bar{display:flex;gap:12px;padding:16px;border-bottom:1px solid var(--line);align-items:center}
+.bar input,.bar select{height:40px;border:1px solid #d1d5db;border-radius:8px;padding:0 12px;font:inherit;color:var(--ink);background:#fff}
+.bar input{flex:1;min-width:0}
+.bar input::placeholder{color:var(--ink-3)}
+.bar select{padding-right:8px;cursor:pointer}
+.bar button{height:40px;padding:0 18px;border:1px solid var(--brand);background:var(--brand);color:#fff;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;margin-left:auto}
+.bar button:hover{background:var(--brand-ink);border-color:var(--brand-ink)}
+
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding:12px 16px;background:#fafbfc;border-bottom:1px solid var(--line)}
+td{padding:16px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafbff}
+.num,th.num{text-align:right}
+td.id{font-weight:600;font-variant-numeric:tabular-nums}
+td.cust{font-weight:500}
+td.date{color:var(--ink-2);font-variant-numeric:tabular-nums}
+td.num{font-variant-numeric:tabular-nums;font-weight:600}
+th.act,td.act{text-align:right}
+
+.s{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;font-size:12px;font-weight:600;border-radius:999px}
+.s::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.pend{background:var(--pend-bg);color:var(--pend-ink)}
+.bad{background:var(--bad-bg);color:var(--bad-ink)}
+
+td.act a{display:inline-block;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;color:var(--brand);margin-left:4px}
+td.act a:hover{background:var(--brand-tint)}
+td.act a.danger{color:var(--bad-ink)}
+td.act a.danger:hover{background:var(--bad-bg)}
+
+.pg{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
+.pg nav{display:flex;gap:8px}
+.pg a{padding:6px 14px;border:1px solid #d1d5db;border-radius:8px;text-decoration:none;font-weight:600;color:var(--ink);background:#fff}
+.pg a:hover{background:#f3f4f6}
+</style>
+</head>
+<body>
+<header class="top">
+  <b class="brand"><i></i>ShopAdmin</b>
+  <nav class="nav" aria-label="Main">
+    <a href="#">Dashboard</a><a href="#" aria-current="page">Orders</a><a href="#">Products</a><a href="#">Customers</a><a href="#">Settings</a>
+  </nav>
+</header>
+<main class="wrap">
+  <div class="head"><h1>Orders</h1><span class="count">248 orders</span></div>
+  <section class="card">
+    <div class="bar">
+      <input type="search" placeholder="Search by order # or customer" aria-label="Search orders">
+      <select aria-label="Status"><option>All statuses</option><option>Paid</option><option>Pending</option><option>Refunded</option></select>
+      <select aria-label="Date range"><option>Last 30 days</option><option>Last 7 days</option></select>
+      <button type="button">Export CSV</button>
+    </div>
+    <table>
+      <thead><tr><th>Order #</th><th>Customer</th><th>Date</th><th class="num">Total</th><th>Status</th><th class="act">Actions</th></tr></thead>
+      <tbody>
+        <tr><td class="id">#10482</td><td class="cust">Sara Whitfield</td><td class="date">2026-11-12</td><td class="num">$128.40</td><td><span class="s ok">Paid</span></td><td class="act"><a href="#">View</a><a href="#" class="danger">Refund</a></td></tr>
+        <tr><td class="id">#10481</td><td class="cust">Daniel Okafor</td><td class="date">2026-11-12</td><td class="num">$54.00</td><td><span class="s pend">Pending</span></td><td class="act"><a href="#">View</a><a href="#" class="danger">Cancel</a></td></tr>
+        <tr><td class="id">#10480</td><td class="cust">Mei Tanaka</td><td class="date">2026-11-11</td><td class="num">$312.90</td><td><span class="s ok">Paid</span></td><td class="act"><a href="#">View</a><a href="#" class="danger">Refund</a></td></tr>
+        <tr><td class="id">#10479</td><td class="cust">Lucas Moreau</td><td class="date">2026-11-11</td><td class="num">$19.99</td><td><span class="s bad">Refunded</span></td><td class="act"><a href="#">View</a></td></tr>
+        <tr><td class="id">#10478</td><td class="cust">Aisha Rahman</td><td class="date">2026-11-10</td><td class="num">$87.25</td><td><span class="s ok">Paid</span></td><td class="act"><a href="#">View</a><a href="#" class="danger">Refund</a></td></tr>
+      </tbody>
+    </table>
+    <div class="pg"><span>Showing 1-5 of 248 orders</span><nav aria-label="Pagination"><a href="#">Previous</a><a href="#">Next</a></nav></div>
+  </section>
+</main>
+</body>
+</html>

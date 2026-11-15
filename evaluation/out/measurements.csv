@@ -1,0 +1,16 @@
+screen,condition,status,contrast_failures,contrast_checked,contrast_unknown_bg,target_size_violations,targets_under_44,interactive_count,min_font_px,distinct_font_sizes,content_parity_pct,overflow_x,dir,missing_strings,worst_contrast,small_targets
+s1-signup,orig,ok,13,14,0,1,7,9,11,5,100.0,0,ltr,,Start your 14-day free trial.  3.54; First name 3.54; Last name 3.54,INPUT 13x13
+s1-signup,A,ok,0,14,0,1,1,9,13,5,100.0,0,ltr,,,INPUT 22x22
+s1-signup,B,ok,0,22,0,0,0,10,14,4,100.0,0,ltr,,,
+s2-orders,orig,ok,17,52,0,5,9,20,11,5,100.0,0,ltr,,Export CSV 4.03; Paid 2.78; View 4.03,Dashboard 69x16; Orders 43x16; Products 55x16
+s2-orders,A,ok,0,52,0,0,15,20,12,5,97.6,0,ltr,|,,
+s2-orders,B,ok,1,61,0,0,23,28,13,6,97.6,0,ltr,|,Previous 3.24,
+s3-dashboard,orig,ok,13,36,0,0,0,4,11,6,100.0,0,ltr,,Today 3.59; 7 days 3.59; 30 days 3.59,
+s3-dashboard,A,ok,0,41,0,0,9,9,11,7,100.0,0,ltr,,,
+s3-dashboard,B,ok,0,46,0,0,9,9,12,6,97.2,0,ltr,-1.4%,,
+s4-booking-fa,orig,ok,4,32,0,0,1,1,12,4,100.0,0,rtl,,متخصص پوست و مو - ۱۲ سال سابقه 2.85; ۴٫۷ از ۵ (۳۱۲ نظر) 2.85; ۰۹:۰۰ 1.92,
+s4-booking-fa,A,ok,5,43,0,0,1,15,12,6,100.0,0,rtl,,۰۹:۰۰ 2.00; ۱۱:۰۰ 2.00; انتخاب‌شده 2.98,
+s4-booking-fa,B,ok,2,42,0,0,0,15,13,4,100.0,0,rtl,,۰۹:۰۰ 4.01; ۱۱:۰۰ 4.01,
+s5-onboarding-fa,orig,ok,2,5,0,0,2,3,12,4,100.0,0,rtl,,رد کردن 2.85; تمام تراکنش‌های خود را در یک ن 3.54,
+s5-onboarding-fa,A,ok,0,5,0,0,0,3,14,4,100.0,0,rtl,,,
+s5-onboarding-fa,B,ok,0,5,0,0,3,6,15,4,100.0,0,rtl,,,

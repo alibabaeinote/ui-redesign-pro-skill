@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Orders</title>
+<style>body{font-family:Arial,sans-serif;margin:0;background:#fafafa;color:#222}.top{background:#1f2937;color:#fff;padding:12px 20px;display:flex;gap:20px;font-size:14px}.top a{color:#cbd5e1;text-decoration:none}
+.wrap{padding:20px}h1{font-size:20px;margin:0 0 12px}.bar{display:flex;gap:8px;margin-bottom:12px}.bar input,.bar select{height:30px;border:1px solid #ccc;padding:0 8px;font-size:13px}
+.bar button{height:30px;padding:0 12px;border:1px solid #2b7de9;background:#2b7de9;color:#fff;font-size:13px}table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+th{background:#eee;text-align:left;padding:8px;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}.s{padding:2px 6px;font-size:11px;color:#fff;border-radius:3px}.ok{background:#4caf50}.pend{background:#ff9800}.bad{background:#e53935}
+td a{color:#2b7de9;font-size:12px;margin-right:6px}.pg{margin-top:12px;font-size:12px;color:#888}</style></head><body>
+<div class="top"><b>ShopAdmin</b><a href="#">Dashboard</a><a href="#">Orders</a><a href="#">Products</a><a href="#">Customers</a><a href="#">Settings</a></div>
+<div class="wrap"><h1>Orders</h1><div class="bar"><input placeholder="Search by order # or customer"><select><option>All statuses</option><option>Paid</option><option>Pending</option><option>Refunded</option></select><select><option>Last 30 days</option><option>Last 7 days</option></select><button>Export CSV</button></div>
+<table><tr><th>Order #</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th></tr>
+<tr><td>#10482</td><td>Sara Whitfield</td><td>2026-11-12</td><td>$128.40</td><td><span class="s ok">Paid</span></td><td><a href="#">View</a><a href="#">Refund</a></td></tr>
+<tr><td>#10481</td><td>Daniel Okafor</td><td>2026-11-12</td><td>$54.00</td><td><span class="s pend">Pending</span></td><td><a href="#">View</a><a href="#">Cancel</a></td></tr>
+<tr><td>#10480</td><td>Mei Tanaka</td><td>2026-11-11</td><td>$312.90</td><td><span class="s ok">Paid</span></td><td><a href="#">View</a><a href="#">Refund</a></td></tr>
+<tr><td>#10479</td><td>Lucas Moreau</td><td>2026-11-11</td><td>$19.99</td><td><span class="s bad">Refunded</span></td><td><a href="#">View</a></td></tr>
+<tr><td>#10478</td><td>Aisha Rahman</td><td>2026-11-10</td><td>$87.25</td><td><span class="s ok">Paid</span></td><td><a href="#">View</a><a href="#">Refund</a></td></tr></table>
+<div class="pg">Showing 1-5 of 248 orders &nbsp; <a href="#">Previous</a> | <a href="#">Next</a></div></div></body></html>

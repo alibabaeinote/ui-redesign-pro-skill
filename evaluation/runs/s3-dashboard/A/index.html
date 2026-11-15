@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sales overview</title>
+<style>
+:root{--bg:#f6f7f9;--surface:#fff;--line:#e6e8ec;--ink:#14181f;--muted:#5f6876;--faint:#8a93a1;--brand:#2b5cff;--brand-soft:#e9efff;--up:#12794a;--up-bg:#e5f5ec;--dn:#b42318;--dn-bg:#fdeceb;--side:#101521}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.side{position:fixed;inset:0 auto 0 0;width:208px;background:var(--side);color:#aab2c3;padding:20px 12px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:16px;padding:4px 10px 24px}
+.brand:before{content:"";width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#5b86ff,#2b5cff)}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.side a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:inherit;text-decoration:none;font-size:14px}
+.side a:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.45}
+.side a:hover{background:rgba(255,255,255,.07);color:#fff}
+.side a[aria-current=page]{background:rgba(91,134,255,.18);color:#fff}
+.side a[aria-current=page]:before{background:#7d9cff;opacity:1}
+a:focus-visible,button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.main{margin-left:208px;padding:32px 40px 48px;max-width:1072px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+h1{font-size:24px;line-height:32px;font-weight:700;margin:0;letter-spacing:-.01em}
+.tabs{display:inline-flex;background:#e9ebef;border-radius:10px;padding:3px}
+.tabs a{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(16,21,33,.12)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.c,.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.c{padding:18px 20px}
+.c small{display:block;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.06em}
+.c b{display:block;font-size:28px;line-height:36px;font-weight:700;margin:6px 0 10px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.up,.dn{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px}
+.up{color:var(--up);background:var(--up-bg)}.up:before{content:"\2191 "}
+.dn{color:var(--dn);background:var(--dn-bg)}.dn:before{content:"\2193 "}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:16px}
+.panel{padding:20px 24px 22px}
+h2{font-size:16px;line-height:24px;font-weight:600;margin:0 0 16px}
+.chart{position:relative;height:200px;display:grid;grid-template-columns:repeat(6,1fr);gap:20px;align-items:end;padding:0 4px;background:repeating-linear-gradient(to top,var(--line) 0 1px,transparent 1px 50px);border-bottom:1px solid var(--line)}
+.chart i{display:block;border-radius:6px 6px 0 0;background:#b9c9ff;transition:background .15s}
+.chart i:hover{background:#7d9cff}
+.chart i:last-child{background:var(--brand)}
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;padding:8px 4px 0;font-size:12px;color:var(--muted);text-align:center}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 0 10px}
+td{padding:11px 0;border-top:1px solid var(--line)}
+th:last-child,td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+td:last-child{font-weight:600}
+</style></head><body>
+<aside class="side"><div class="brand">Northwind</div>
+<nav aria-label="Primary"><a href="#" aria-current="page">Overview</a><a href="#">Sales</a><a href="#">Customers</a><a href="#">Reports</a><a href="#">Settings</a></nav></aside>
+<main class="main">
+<header><h1>Sales overview</h1>
+<div class="tabs" role="group" aria-label="Period"><a href="#" aria-current="true">Today</a><a href="#">7 days</a><a href="#">30 days</a><a href="#">Year</a></div></header>
+<section class="cards" aria-label="Key metrics">
+<div class="c"><small>REVENUE</small><b>$48,210</b><span class="up">+8.2% vs last period</span></div>
+<div class="c"><small>ORDERS</small><b>1,284</b><span class="up">+3.1%</span></div>
+<div class="c"><small>AVG. ORDER VALUE</small><b>$37.55</b><span class="dn">-1.4%</span></div>
+<div class="c"><small>REFUND RATE</small><b>2.3%</b><span class="dn">+0.4%</span></div></section>
+<div class="row">
+<section class="panel"><h2>Revenue by month</h2>
+<div class="chart"><i style="height:50%"></i><i style="height:62%"></i><i style="height:58%"></i><i style="height:75%"></i><i style="height:70%"></i><i style="height:92%"></i></div>
+<div class="months"><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div></section>
+<section class="panel"><h2>Top products</h2>
+<table><thead><tr><th>Product</th><th>Sold</th></tr></thead><tbody><tr><td>Canvas Backpack</td><td>312</td></tr><tr><td>Steel Bottle</td><td>288</td></tr><tr><td>Desk Lamp</td><td>201</td></tr><tr><td>Notebook Set</td><td>176</td></tr></tbody></table></section>
+</div></main>
+<script>
+document.querySelectorAll('.tabs a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.tabs a').forEach(x=>x.removeAttribute('aria-current'));a.setAttribute('aria-current','true')}));
+document.querySelectorAll('.side a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.side a').forEach(x=>x.removeAttribute('aria-current'));a.setAttribute('aria-current','page')}));
+</script></body></html>

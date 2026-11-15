@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>شروع</title>
+<style>
+:root{
+  --bg:#f6f8fd;--surface:#fff;--ink:#14213d;--muted:#566176;
+  --brand:#1976d2;--brand-d:#1259a8;--brand-t:#e3eefc;--line:#d6e2f5;
+  --r:16px;
+  --font:Vazirmatn,"IRANSansX","Segoe UI",Tahoma,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{
+  max-width:430px;min-height:100vh;min-height:100dvh;margin:0 auto;background:var(--surface);
+  display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+.top{display:flex;justify-content:flex-end;padding:8px 12px 0}
+.skip{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:22px;
+  font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;
+}
+.skip:hover{background:var(--bg);color:var(--ink)}
+.hero{
+  flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+  padding:8px 24px;min-height:240px;
+}
+.ill{
+  width:100%;max-width:300px;aspect-ratio:11/9;border-radius:28px;
+  background:linear-gradient(160deg,#eaf2fd 0%,var(--brand-t) 100%);
+  display:block;
+}
+.copy{padding:8px 28px 0;text-align:center}
+h1{margin:0;font-size:24px;line-height:1.4;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+p{margin:12px auto 0;max-width:30ch;font-size:15px;line-height:1.9;color:var(--muted)}
+.dots{display:flex;justify-content:center;align-items:center;gap:8px;margin:28px 0 24px;padding:0;list-style:none}
+.dots li{width:8px;height:8px;border-radius:4px;background:var(--line);transition:width .25s ease,background .25s ease}
+.dots li.on{width:28px;background:var(--brand)}
+.actions{display:flex;flex-direction:column;gap:10px;padding:0 20px 20px}
+.b{
+  appearance:none;-webkit-appearance:none;width:100%;height:52px;border-radius:14px;
+  font:600 16px/1 var(--font);cursor:pointer;border:1.5px solid transparent;
+  transition:background .15s ease,transform .1s ease,border-color .15s ease;
+}
+.b:active{transform:scale(.985)}
+.p{background:var(--brand);color:#fff;box-shadow:0 6px 16px rgba(25,118,210,.28)}
+.p:hover{background:var(--brand-d)}
+.s{background:transparent;color:var(--brand-d);border-color:transparent}
+.s:hover{background:var(--brand-t)}
+a:focus-visible,.b:focus-visible{outline:3px solid #0b57d0;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-height:640px){.hero{min-height:160px}.ill{max-width:220px}h1{font-size:21px}.dots{margin:18px 0 16px}}
+</style>
+</head>
+<body>
+<main class="screen">
+  <div class="top"><a class="skip" href="#">رد کردن</a></div>
+
+  <div class="hero">
+    <svg class="ill" viewBox="0 0 330 270" role="img" aria-label="تصویر داشبورد هزینه‌ها" xmlns="http://www.w3.org/2000/svg">
+      <!-- main card -->
+      <rect x="40" y="38" width="250" height="150" rx="20" fill="#fff"/>
+      <rect x="40" y="38" width="250" height="150" rx="20" fill="none" stroke="#c9dcf6"/>
+      <rect x="222" y="58" width="48" height="8" rx="4" fill="#1976d2"/>
+      <rect x="196" y="74" width="74" height="6" rx="3" fill="#c9dcf6"/>
+      <!-- bars (RTL: grow from right) -->
+      <g fill="#9cc3f1">
+        <rect x="244" y="132" width="20" height="38" rx="6"/>
+        <rect x="214" y="116" width="20" height="54" rx="6"/>
+        <rect x="184" y="136" width="20" height="34" rx="6"/>
+      </g>
+      <rect x="154" y="100" width="20" height="70" rx="6" fill="#1976d2"/>
+      <!-- donut -->
+      <circle cx="96" cy="124" r="32" fill="none" stroke="#e3eefc" stroke-width="14"/>
+      <circle cx="96" cy="124" r="32" fill="none" stroke="#1976d2" stroke-width="14" stroke-linecap="round"
+        stroke-dasharray="118 201" transform="rotate(-90 96 124)"/>
+      <circle cx="96" cy="124" r="32" fill="none" stroke="#7fb2ee" stroke-width="14" stroke-linecap="round"
+        stroke-dasharray="40 201" stroke-dashoffset="-134" transform="rotate(-90 96 124)"/>
+      <!-- transaction rows -->
+      <g>
+        <rect x="64" y="176" width="202" height="46" rx="14" fill="#fff"/>
+        <rect x="64" y="176" width="202" height="46" rx="14" fill="none" stroke="#c9dcf6"/>
+        <circle cx="244" cy="199" r="12" fill="#e3eefc"/>
+        <rect x="190" y="190" width="38" height="6" rx="3" fill="#1976d2"/>
+        <rect x="170" y="203" width="58" height="5" rx="2.5" fill="#c9dcf6"/>
+        <rect x="84" y="195" width="46" height="8" rx="4" fill="#9cc3f1"/>
+      </g>
+      <!-- accent -->
+      <circle cx="292" cy="46" r="16" fill="#1976d2"/>
+      <path d="M285 46h14M292 39v14" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <section class="copy">
+    <h1>مدیریت هوشمند هزینه‌ها</h1>
+    <p>تمام تراکنش‌های خود را در یک نگاه ببینید و برای هر دسته‌بندی بودجه تعیین کنید.</p>
+  </section>
+
+  <ol class="dots" aria-label="مرحله 2 از 3" role="list">
+    <li></li><li class="on" aria-current="step"></li><li></li>
+  </ol>
+
+  <div class="actions">
+    <button class="b p" type="button">بعدی</button>
+    <button class="b s" type="button">قبلی</button>
+  </div>
+</main>
+</body>
+</html>

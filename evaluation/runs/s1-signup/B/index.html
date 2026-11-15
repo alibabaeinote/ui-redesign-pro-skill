@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Create account</title>
+<style>
+/* ===== Tokens: primitives -> semantic. 4px base. ===== */
+:root{
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;
+  --radius-control:10px;--radius-inner:6px;--radius-check:6px;
+  --h-control:48px;
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --fs-display:44px;--fs-lead:20px;--fs-body:16px;--fs-small:14px;
+  --dur-micro:120ms;--dur-std:200ms;--ease:cubic-bezier(.2,0,0,1);
+  /* light */
+  --bg:#FAFAF7;--surface:#FFFFFF;
+  --text:#14161A;--text-2:#4A4F57;--text-muted:#5C616A;
+  --border-ctrl:#80858E;--border-hair:#E3E3DD;
+  --accent:#0B6B57;--accent-hover:#095646;--on-accent:#FFFFFF;--accent-tint:#DCEFE8;--on-accent-tint:#0B3F34;
+  --error:#B3261E;
+  --panel:#10231E;--panel-text:#F3F1EA;--panel-text-2:#B9C9C2;--panel-lit:#5CCBAA;--panel-dim:#2F4A41;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0F1115;--surface:#171A20;
+    --text:#F2F3F5;--text-2:#A7ACB5;--text-muted:#9096A0;
+    --border-ctrl:#6B717C;--border-hair:#262A31;
+    --accent:#5CCBAA;--accent-hover:#7ADBBE;--on-accent:#0F1115;--accent-tint:#173229;--on-accent-tint:#BFEBDC;
+    --error:#FF8F86;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 var(--fs-body)/1.5 var(--font-body);-webkit-font-smoothing:antialiased}
+svg.i{width:20px;height:20px;flex:none;fill:currentColor}
+button,input{font:inherit;color:inherit}
+
+/* ===== Layout: split. Pitch left (5fr), form right (7fr) ===== */
+.shell{min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.pitch{background:var(--panel);color:var(--panel-text);padding:var(--space-16);display:flex;flex-direction:column;justify-content:center;gap:var(--space-8)}
+.pitch h1{font:400 var(--fs-display)/1.1 var(--font-display);letter-spacing:-.01em;margin:0;max-width:11ch;text-wrap:balance}
+.pitch .lead{margin:0;font-size:var(--fs-lead);line-height:1.5;color:var(--panel-text-2);display:grid;gap:var(--space-1)}
+.pitch .lead span:first-child{color:var(--panel-text)}
+.days{display:grid;grid-template-columns:repeat(14,1fr);gap:var(--space-1);max-width:336px;margin:0;padding:0;list-style:none}
+.days li{height:32px;border-radius:var(--space-1);background:var(--panel-dim)}
+.days li:last-child{background:var(--panel-lit)}
+
+.main{display:flex;align-items:center;justify-content:center;padding:var(--space-8)}
+form{width:100%;max-width:400px;display:grid;gap:var(--space-6)}
+
+/* ===== Controls ===== */
+.btn{display:flex;align-items:center;justify-content:center;gap:var(--space-2);width:100%;height:var(--h-control);border-radius:var(--radius-control);border:1.5px solid transparent;font-weight:600;font-size:var(--fs-body);cursor:pointer;transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+.btn-ghost{background:var(--surface);border-color:var(--border-ctrl);color:var(--text)}
+.btn-ghost:hover{border-color:var(--text-2)}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.or{display:flex;align-items:center;gap:var(--space-4);color:var(--text-muted);font-size:var(--fs-small);margin:0}
+.or::before,.or::after{content:"";height:1px;background:var(--border-hair);flex:1}
+
+.fields{display:grid;gap:var(--space-4)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+.field{display:grid;gap:var(--space-2);min-width:0}
+label,legend{font-size:var(--fs-small);font-weight:600;line-height:1.4;color:var(--text);padding:0}
+.input{position:relative;display:flex}
+.input input{width:100%;height:var(--h-control);padding:0 var(--space-4);background:var(--surface);border:1.5px solid var(--border-ctrl);border-radius:var(--radius-control);font-size:var(--fs-body);transition:border-color var(--dur-micro) var(--ease)}
+.input input:hover{border-color:var(--text-2)}
+.input input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.input.has-toggle input{padding-right:52px}
+.toggle{position:absolute;right:2px;top:2px;width:44px;height:44px;display:grid;place-items:center;border:0;background:none;border-radius:var(--radius-inner);color:var(--text-2);cursor:pointer}
+.toggle:hover{color:var(--text)}
+.hint,.error{display:flex;gap:var(--space-2);align-items:flex-start;margin:0;font-size:var(--fs-small);line-height:1.4;color:var(--text-muted)}
+.hint svg,.error svg{width:16px;height:16px;margin-top:2px}
+.hint .ok{display:none}
+.field[data-state=ok] .hint{color:var(--accent)}
+.field[data-state=ok] .hint .ok{display:block}
+.field[data-state=ok] .hint .dot{display:none}
+.hint .dot{width:16px;height:16px;flex:none;display:grid;place-items:center}
+.hint .dot::after{content:"";width:4px;height:4px;border-radius:50%;background:currentColor}
+.error{display:none;color:var(--error);font-weight:500}
+.field[data-state=error] .error{display:flex}
+.field[data-state=error] .input input{border-color:var(--error)}
+.field[data-state=error] .hint{color:var(--error)}
+
+/* segmented control: outer 10 = inner 6 + 4 pad */
+.seg{border:0;margin:0;padding:0;display:grid;gap:var(--space-2);min-width:0}
+.seg-track{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-1);padding:var(--space-1);background:var(--surface);border:1.5px solid var(--border-ctrl);border-radius:var(--radius-control);height:var(--h-control)}
+.seg-track label{position:relative;display:grid;place-items:center;border-radius:var(--radius-inner);font-weight:500;color:var(--text-2);cursor:pointer;font-variant-numeric:tabular-nums;font-size:var(--fs-small);transition:background var(--dur-micro) var(--ease)}
+.seg-track label:hover{background:var(--border-hair)}
+.seg-track input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.seg-track label:has(input:checked){background:var(--accent-tint);color:var(--on-accent-tint);font-weight:600;box-shadow:inset 0 0 0 1.5px var(--accent)}
+.seg-track label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+
+/* consent */
+.consent{display:grid;gap:var(--space-2)}
+.check{display:flex;gap:var(--space-3);align-items:flex-start;min-height:44px;padding:var(--space-2) 0;cursor:pointer;font-weight:400;font-size:var(--fs-small);line-height:1.5;color:var(--text-2)}
+.check .box{position:relative;flex:none;width:20px;height:20px;margin-top:2px}
+.check input{position:absolute;inset:-12px;width:44px;height:44px;opacity:0;margin:0;cursor:pointer}
+.check .face{pointer-events:none;position:absolute;inset:0;border:1.5px solid var(--border-ctrl);border-radius:var(--radius-check);background:var(--surface);display:grid;place-items:center;color:var(--on-accent);transition:background var(--dur-micro) var(--ease)}
+.check .face svg{width:14px;height:14px;opacity:0}
+.check input:checked+.face{background:var(--accent);border-color:var(--accent)}
+.check input:checked+.face svg{opacity:1}
+.check input:focus-visible+.face{outline:2px solid var(--accent);outline-offset:2px}
+.check a{color:var(--text);font-weight:600}
+.consent[data-state=error] .face{border-color:var(--error)}
+.consent[data-state=error] .error{display:flex}
+a{color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--accent-hover)}
+.submit{display:grid;gap:var(--space-4)}
+.alt{margin:0;text-align:center;font-size:var(--fs-small);color:var(--text-2)}
+.alt a{font-weight:600}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid currentColor;border-right-color:transparent;animation:r .7s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:2s!important}.btn:active{transform:none}}
+
+/* ===== <= 840: stacked, pitch becomes a compact header ===== */
+@media (max-width:840px){
+  .shell{grid-template-columns:1fr;min-height:0}
+  .pitch{padding:var(--space-8) var(--space-6);gap:var(--space-4);justify-content:flex-start}
+  .pitch h1{font-size:32px;max-width:none}
+  .pitch .lead{font-size:var(--fs-body)}
+  .days{max-width:none}
+  .days li{height:16px}
+  .main{padding:var(--space-8) var(--space-6) var(--space-12);align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-eye" viewBox="0 0 256 256"><path d="M251,123.13c-.37-.81-9.13-20.26-28.48-39.61C196.63,57.67,164,44,128,44S59.37,57.67,33.51,83.52C14.16,102.87,5.4,122.32,5,123.13a12.08,12.08,0,0,0,0,9.75c.37.82,9.13,20.26,28.49,39.61C59.37,198.34,92,212,128,212s68.63-13.66,94.48-39.51c19.36-19.35,28.12-38.79,28.49-39.61A12.08,12.08,0,0,0,251,123.13Zm-46.06,33C183.47,177.27,157.59,188,128,188s-55.47-10.73-76.91-31.88A130.36,130.36,0,0,1,29.52,128,130.45,130.45,0,0,1,51.09,99.89C72.54,78.73,98.41,68,128,68s55.46,10.73,76.91,31.89A130.36,130.36,0,0,1,226.48,128,130.45,130.45,0,0,1,204.91,156.12ZM128,84a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,84Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,148Z"/></symbol><symbol id="i-eyeoff" viewBox="0 0 256 256"><path d="M56.88,31.93A12,12,0,1,0,39.12,48.07l16,17.65C20.67,88.66,5.72,121.58,5,123.13a12.08,12.08,0,0,0,0,9.75c.37.82,9.13,20.26,28.49,39.61C59.37,198.34,92,212,128,212a131.34,131.34,0,0,0,51-10l20.09,22.1a12,12,0,0,0,17.76-16.14ZM128,188c-29.59,0-55.47-10.73-76.91-31.88A130.69,130.69,0,0,1,29.52,128c5.27-9.31,18.79-29.9,42-44.29l90.09,99.11A109.33,109.33,0,0,1,128,188Zm123-55.12c-.36.81-9,20-28,39.16a12,12,0,1,1-17-16.9A130.48,130.48,0,0,0,226.48,128a130.36,130.36,0,0,0-21.57-28.12C183.46,78.73,157.59,68,128,68c-3.35,0-6.7.14-10,.42a12,12,0,1,1-2-23.91c3.93-.34,8-.51,12-.51,36,0,68.63,13.67,94.49,39.52,19.35,19.35,28.11,38.8,28.48,39.61A12.08,12.08,0,0,1,251,132.88Z"/></symbol><symbol id="i-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></symbol><symbol id="i-google" viewBox="0 0 256 256"><path d="M228,128a100,100,0,1,1-22.86-63.64,12,12,0,0,1-18.51,15.28A76,76,0,1,0,203.05,140H128a12,12,0,0,1,0-24h88A12,12,0,0,1,228,128Z"/></symbol><symbol id="i-warn" viewBox="0 0 256 256"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-12-80V80a12,12,0,0,1,24,0v52a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,172Z"/></symbol></svg>
+<div class="shell">
+  <header class="pitch">
+    <h1>Create your account</h1>
+    <p class="lead"><span>Start your 14-day free trial.</span><span>No credit card required.</span></p>
+    <ol class="days" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+  </header>
+
+  <main class="main">
+    <form id="f" novalidate>
+      <button type="button" class="btn btn-ghost"><svg class="i"><use href="#i-google"/></svg>Continue with Google</button>
+      <p class="or" role="separator"><span>or</span></p>
+
+      <div class="fields">
+        <div class="row">
+          <div class="field" data-req="Enter your first name">
+            <label for="fn">First name</label>
+            <div class="input"><input id="fn" name="fn" autocomplete="given-name" required aria-describedby="fn-e"></div>
+            <p class="error" id="fn-e"><svg class="i"><use href="#i-warn"/></svg><span>Enter your first name</span></p>
+          </div>
+          <div class="field" data-req="Enter your last name">
+            <label for="ln">Last name</label>
+            <div class="input"><input id="ln" name="ln" autocomplete="family-name" required aria-describedby="ln-e"></div>
+            <p class="error" id="ln-e"><svg class="i"><use href="#i-warn"/></svg><span>Enter your last name</span></p>
+          </div>
+        </div>
+        <div class="field" data-req="Enter a valid work email">
+          <label for="em">Work email</label>
+          <div class="input"><input id="em" name="em" type="email" autocomplete="email" inputmode="email" required aria-describedby="em-e"></div>
+          <p class="error" id="em-e"><svg class="i"><use href="#i-warn"/></svg><span>Enter a valid work email</span></p>
+        </div>
+        <div class="field" id="pwf">
+          <label for="pw">Password</label>
+          <div class="input has-toggle">
+            <input id="pw" name="pw" type="password" autocomplete="new-password" required aria-describedby="pw-h">
+            <button type="button" class="toggle" id="tg" aria-label="Show password" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg></button>
+          </div>
+          <p class="hint" id="pw-h"><span class="dot"></span><svg class="i ok"><use href="#i-check"/></svg><span>At least 8 characters, one number</span></p>
+        </div>
+      </div>
+
+      <fieldset class="seg">
+        <legend>Company size</legend>
+        <div class="seg-track">
+          <label><input type="radio" name="co" value="1-10" checked>1-10</label>
+          <label><input type="radio" name="co" value="11-50">11-50</label>
+          <label><input type="radio" name="co" value="51-200">51-200</label>
+          <label><input type="radio" name="co" value="201+">201+</label>
+        </div>
+      </fieldset>
+
+      <div class="submit">
+        <div class="consent" id="cf">
+          <label class="check" for="t">
+            <span class="box"><input type="checkbox" id="t" aria-describedby="t-e"><span class="face"><svg class="i"><use href="#i-check"/></svg></span></span>
+            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+          </label>
+          <p class="error" id="t-e"><svg class="i"><use href="#i-warn"/></svg><span>Agree to the terms to continue</span></p>
+        </div>
+        <button type="submit" class="btn btn-primary" id="go"><span id="go-l">Create account</span></button>
+        <p class="alt">Already have an account? <a href="#">Sign in</a></p>
+      </div>
+      <p class="sr" role="status" aria-live="polite" id="live"></p>
+    </form>
+  </main>
+</div>
+<script>
+(function(){
+  var f=document.getElementById('f'),pw=document.getElementById('pw'),pwf=document.getElementById('pwf'),
+      tg=document.getElementById('tg'),t=document.getElementById('t'),cf=document.getElementById('cf'),
+      go=document.getElementById('go'),live=document.getElementById('live');
+  function set(el,s){if(s)el.setAttribute('data-state',s);else el.removeAttribute('data-state')}
+  function pwOk(v){return v.length>=8&&/\d/.test(v)}
+  function checkField(inp){
+    var fld=inp.closest('.field'),v=inp.value.trim(),ok;
+    if(inp.id==='em')ok=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);else ok=v.length>0;
+    set(fld,ok?null:'error');inp.setAttribute('aria-invalid',ok?'false':'true');return ok;
+  }
+  function checkPw(final){
+    var ok=pwOk(pw.value);
+    set(pwf,ok?'ok':(final?'error':null));pw.setAttribute('aria-invalid',(!ok&&final)?'true':'false');return ok;
+  }
+  ['fn','ln','em'].forEach(function(id){var i=document.getElementById(id);
+    i.addEventListener('blur',function(){if(i.value||i.closest('.field').hasAttribute('data-touched'))checkField(i);i.closest('.field').setAttribute('data-touched','')});
+    i.addEventListener('input',function(){if(i.closest('.field').getAttribute('data-state')==='error')checkField(i)});});
+  pw.addEventListener('input',function(){checkPw(pwf.getAttribute('data-state')==='error')});
+  pw.addEventListener('blur',function(){if(pw.value)checkPw(true)});
+  tg.addEventListener('click',function(){
+    var show=pw.type==='password';pw.type=show?'text':'password';
+    tg.setAttribute('aria-pressed',show);tg.setAttribute('aria-label',show?'Hide password':'Show password');
+    tg.querySelector('use').setAttribute('href',show?'#i-eyeoff':'#i-eye');
+  });
+  t.addEventListener('change',function(){set(cf,t.checked?null:'error')});
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=[];
+    ['fn','ln','em'].forEach(function(id){var i=document.getElementById(id);if(!checkField(i))bad.push(i)});
+    if(!checkPw(true))bad.push(pw);
+    if(!t.checked){set(cf,'error');bad.push(t)}
+    if(bad.length){bad[0].focus();live.textContent=bad.length+' fields need attention';return}
+    go.disabled=true;go.setAttribute('aria-busy','true');
+    document.getElementById('go-l').outerHTML='<span class="spin" aria-hidden="true"></span>';
+    setTimeout(function(){
+      go.removeAttribute('aria-busy');
+      go.innerHTML='<svg class="i"><use href="#i-check"/></svg><span>Account created</span>';
+      live.textContent='Account created';
+      f.querySelectorAll('input').forEach(function(i){i.disabled=true});
+    },900);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orders · ShopAdmin</title>
+<style>
+/* ===== Tokens (primitives -> semantic). Spacing base 4. Contrast values computed, see report. ===== */
+:root{
+  /* color primitives */
+  --ink-900:#17181B; --ink-700:#454951; --ink-500:#5F636B; --ink-300:#8B8F97;
+  --paper-50:#F6F5F1; --paper-0:#FFFFFF; --line:#E4E2DB; --line-strong:#D3D0C6;
+  --blue-600:#1D4ED8; --blue-050:#EAF0FD;
+  --rail-900:#14161A; --rail-800:#262A31;
+  /* semantic color */
+  --bg:var(--paper-50); --surface:var(--paper-0);
+  --text:var(--ink-900); --text-2:var(--ink-700); --text-3:var(--ink-500);
+  --border:var(--line); --border-control:var(--ink-300);
+  --accent:var(--blue-600); --on-accent:#FFFFFF; --focus:var(--blue-600);
+  --paid-fg:#0F5C33; --paid-bg:#E1F2E8;
+  --pend-fg:#7A4300; --pend-bg:#FBEACB; --pend-mark:#B45F00;
+  --ref-fg:#3C4350;  --ref-bg:#E7E9EE;
+  --danger:#A3201B; --danger-bg:#FBEDEC;
+  --rail-text:#C9CCD3; --rail-muted:#9AA0AB;
+  /* spacing scale */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s8:32px; --s10:40px;
+  /* shape */
+  --r-card:12px; --r-ctl:8px; --r-pill:999px;
+  --h-ctl:40px; --h-sm:32px;
+  /* type */
+  --font-ui:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --font-mono:"SF Mono","Cascadia Mono",ui-monospace,Menlo,Consolas,monospace;
+  /* motion */
+  --t-micro:120ms; --t-std:200ms; --ease:cubic-bezier(.2,.0,.0,1);
+  --shadow-card:0 1px 0 rgba(23,24,27,.04),0 1px 2px rgba(23,24,27,.04);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--text);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg.i.sm{width:14px;height:14px;stroke-width:2.25}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:var(--r-ctl)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== Shell ===== */
+.shell{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
+.rail{background:var(--rail-900);color:var(--rail-text);padding:var(--s6) var(--s3);display:flex;flex-direction:column;gap:var(--s8);position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:var(--s2);padding:0 var(--s3);color:#fff;font-weight:650;font-size:17px;letter-spacing:.01em}
+.brand svg{width:22px;height:22px}
+.nav{display:flex;flex-direction:column;gap:var(--s1)}
+.nav a{display:flex;align-items:center;gap:var(--s3);height:40px;padding:0 var(--s3);border-radius:var(--r-ctl);color:var(--rail-text);text-decoration:none;font-size:15px;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.nav a svg{color:var(--rail-muted)}
+.nav a:hover{background:var(--rail-800);color:#fff}
+.nav a[aria-current=page]{background:var(--rail-800);color:#fff;font-weight:600}
+.nav a[aria-current=page] svg{color:#fff}
+.rail :focus-visible{outline-color:#fff}
+
+.main{padding:var(--s10) var(--s10) var(--s10);max-width:1056px;width:100%}
+.head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--s6)}
+h1{font-family:var(--font-display);font-weight:600;font-size:36px;line-height:1.15;letter-spacing:-.01em;margin:0}
+
+/* ===== Controls ===== */
+.btn{display:inline-flex;align-items:center;gap:var(--s2);height:var(--h-ctl);padding:0 var(--s4);border-radius:var(--r-ctl);border:1px solid var(--border-control);background:var(--surface);font-size:15px;font-weight:600;cursor:pointer;transition:background var(--t-micro) var(--ease),border-color var(--t-micro) var(--ease)}
+.btn:hover{background:var(--bg);border-color:var(--ink-700)}
+.btn:active{background:var(--line)}
+.btn{white-space:nowrap}
+.btn.sm{height:var(--h-sm);padding:0 var(--s3);font-size:14px}
+.btn[disabled]{color:var(--ink-300);border-color:var(--line-strong);background:transparent;cursor:not-allowed}
+.btn[disabled]:hover{background:transparent;border-color:var(--line-strong)}
+
+.toolbar{display:flex;align-items:center;gap:var(--s4);margin-bottom:var(--s4)}
+.search{position:relative;flex:0 0 320px}
+.search svg{position:absolute;left:var(--s3);top:11px;color:var(--text-3);pointer-events:none}
+.search input{width:100%;height:var(--h-ctl);padding:0 var(--s3) 0 40px;border:1px solid var(--border-control);border-radius:var(--r-ctl);background:var(--surface);font-size:15px}
+.search input::placeholder{color:var(--text-3);opacity:1}
+.search input:hover{border-color:var(--ink-700)}
+.segs{display:inline-flex;padding:var(--s1);gap:var(--s1);background:var(--line);border-radius:12px;height:var(--h-ctl)}
+.segs button{height:32px;padding:0 var(--s4);border:0;border-radius:var(--r-ctl);background:transparent;color:var(--text-2);font-size:15px;font-weight:550;cursor:pointer;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.segs button:hover{color:var(--text)}
+.segs button[aria-pressed=true]{background:var(--text);color:#fff;font-weight:600}
+.date{position:relative;margin-left:auto}
+.date select{appearance:none;-webkit-appearance:none;height:var(--h-ctl);padding:0 40px 0 40px;border:1px solid var(--border-control);border-radius:var(--r-ctl);background:var(--surface);font-size:15px;cursor:pointer}
+.date select:hover{border-color:var(--ink-700)}
+.date .l{position:absolute;left:var(--s3);top:11px;color:var(--text-3);pointer-events:none}
+.date .r{position:absolute;right:var(--s3);top:11px;color:var(--text-3);pointer-events:none}
+
+/* ===== Table (ledger) ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);box-shadow:var(--shadow-card);overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-id{width:128px} col.c-date{width:136px} col.c-total{width:120px} col.c-status{width:148px} col.c-act{width:236px}
+thead th{height:44px;padding:0 var(--s4);text-align:left;font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:.02em;border-bottom:1px solid var(--line-strong);background:var(--surface);white-space:nowrap}
+th:first-child,td:first-child{padding-left:var(--s6)}
+th.num,td.num{text-align:right}
+tbody td{height:56px;padding:0 var(--s4);border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr{transition:background var(--t-micro) var(--ease)}
+tbody tr:hover{background:#FAF9F6}
+tbody td:first-child{position:relative}
+tr.is-pending td:first-child::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pend-mark)}
+.oid{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--accent);text-decoration:none;font-variant-numeric:tabular-nums}
+.oid:hover{text-decoration:underline;text-underline-offset:3px}
+.cust{font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.date-c{color:var(--text-2);font-variant-numeric:tabular-nums}
+.total{font-weight:650;font-variant-numeric:tabular-nums}
+
+.badge{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px 0 8px;border-radius:var(--r-pill);font-size:13px;font-weight:600}
+.badge.paid{color:var(--paid-fg);background:var(--paid-bg)}
+.badge.pend{color:var(--pend-fg);background:var(--pend-bg)}
+.badge.ref{color:var(--ref-fg);background:var(--ref-bg)}
+
+.acts{display:grid;grid-template-columns:84px 1fr;align-items:center;gap:var(--s2)}
+.link{display:inline-flex;align-items:center;gap:var(--s2);height:var(--h-sm);padding:0 var(--s2);border:0;border-radius:var(--r-ctl);background:transparent;color:var(--text-2);font-size:14px;font-weight:600;cursor:pointer;width:max-content;transition:background var(--t-micro) var(--ease),color var(--t-micro) var(--ease)}
+.link:hover{background:var(--danger-bg);color:var(--danger)}
+.confirm{display:flex;align-items:center;gap:var(--s2);grid-column:1 / -1;font-size:14px}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:#fff}
+.btn.danger:hover{background:#861814;border-color:#861814}
+
+.foot{display:flex;align-items:center;justify-content:space-between;padding:var(--s4) var(--s6);border-top:1px solid var(--line-strong);font-size:15px;color:var(--text-2)}
+.foot b{color:var(--text);font-weight:650;font-variant-numeric:tabular-nums}
+.pager{display:flex;gap:var(--s2)}
+
+.empty{padding:var(--s10) var(--s6);text-align:center;color:var(--text-2)}
+.empty h2{font-size:18px;margin:0 0 var(--s1);color:var(--text)}
+.empty p{margin:0 0 var(--s4)}
+
+.toast{position:fixed;left:50%;bottom:var(--s8);transform:translate(-50%,16px);opacity:0;background:var(--text);color:#fff;padding:var(--s3) var(--s5);border-radius:var(--r-ctl);font-size:15px;pointer-events:none;transition:opacity var(--t-std) var(--ease),transform var(--t-std) var(--ease)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-undo-2" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5" /> <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></symbol>
+<symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m15 9-6 6" /> <path d="m9 9 6 6" /></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" /> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /> <path d="m7 10 5 5 5-5" /></symbol>
+<symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /></symbol>
+<symbol id="i-shopping-bag" viewBox="0 0 24 24"><path d="M16 10a4 4 0 0 1-8 0" /> <path d="M3.103 6.034h17.794" /> <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" /></symbol>
+<symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" /> <path d="M12 22V12" /> <polyline points="3.29 7 12 12 20.71 7" /> <path d="m7.5 4.27 9 5.15" /></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /> <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol>
+<symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /> <path d="M3 3v5h5" /></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" /> <path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" /> <path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" /></symbol>
+</svg>
+
+<div class="shell">
+  <nav class="rail" aria-label="Main">
+    <div class="brand"><svg class="i"><use href="#i-store"/></svg>ShopAdmin</div>
+    <div class="nav">
+      <a href="#"><svg class="i"><use href="#i-layout-dashboard"/></svg>Dashboard</a>
+      <a href="#" aria-current="page"><svg class="i"><use href="#i-shopping-bag"/></svg>Orders</a>
+      <a href="#"><svg class="i"><use href="#i-package"/></svg>Products</a>
+      <a href="#"><svg class="i"><use href="#i-users"/></svg>Customers</a>
+      <a href="#"><svg class="i"><use href="#i-settings"/></svg>Settings</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="head">
+      <h1>Orders</h1>
+      <button class="btn" id="export"><svg class="i"><use href="#i-download"/></svg>Export CSV</button>
+    </div>
+
+    <div class="toolbar" role="search">
+      <div class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <label class="sr" for="q">Search orders</label>
+        <input id="q" type="search" placeholder="Search by order # or customer" autocomplete="off">
+      </div>
+      <div class="segs" role="group" aria-label="Filter by status">
+        <button type="button" data-s="all" aria-pressed="true">All statuses</button>
+        <button type="button" data-s="Paid" aria-pressed="false">Paid</button>
+        <button type="button" data-s="Pending" aria-pressed="false">Pending</button>
+        <button type="button" data-s="Refunded" aria-pressed="false">Refunded</button>
+      </div>
+      <div class="date">
+        <svg class="i l"><use href="#i-calendar"/></svg>
+        <label class="sr" for="range">Date range</label>
+        <select id="range"><option>Last 30 days</option><option>Last 7 days</option></select>
+        <svg class="i r"><use href="#i-chevron-down"/></svg>
+      </div>
+    </div>
+
+    <section class="card" aria-label="Orders list">
+      <table>
+        <colgroup><col class="c-id"><col><col class="c-date"><col class="c-total"><col class="c-status"><col class="c-act"></colgroup>
+        <thead><tr><th scope="col">Order #</th><th scope="col">Customer</th><th scope="col">Date</th><th scope="col" class="num">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <h2>No orders match</h2>
+        <p>Try a different search or status.</p>
+        <button class="btn sm" id="clear">Clear filters</button>
+      </div>
+      <div class="foot">
+        <div id="count" aria-live="polite">Showing <b>1-5</b> of <b>248</b> orders</div>
+        <div class="pager">
+          <button class="btn sm" disabled><svg class="i"><use href="#i-chevron-left"/></svg>Previous</button>
+          <button class="btn sm" id="next">Next<svg class="i"><use href="#i-chevron-right"/></svg></button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const data=[
+ {id:"#10482",c:"Sara Whitfield",d:"2026-11-12",t:"$128.40",s:"Paid"},
+ {id:"#10481",c:"Daniel Okafor",d:"2026-11-12",t:"$54.00",s:"Pending"},
+ {id:"#10480",c:"Mei Tanaka",d:"2026-11-11",t:"$312.90",s:"Paid"},
+ {id:"#10479",c:"Lucas Moreau",d:"2026-11-11",t:"$19.99",s:"Refunded"},
+ {id:"#10478",c:"Aisha Rahman",d:"2026-11-10",t:"$87.25",s:"Paid"}
+];
+const st={all:"all",q:"",confirm:null};
+const ico={Paid:"check",Pending:"clock",Refunded:"rotate-ccw"};
+const cls={Paid:"paid",Pending:"pend",Refunded:"ref"};
+const $=s=>document.querySelector(s);
+function icon(n,sm){return `<svg class="i${sm?" sm":""}" aria-hidden="true"><use href="#i-${n}"/></svg>`}
+function actions(o){
+  if(st.confirm&&st.confirm.id===o.id){
+    const v=st.confirm.kind;
+    return `<div class="acts"><div class="confirm" role="group" aria-label="Confirm ${v.toLowerCase()} for order ${o.id}"><button class="btn sm danger" data-do="${o.id}" data-k="${v}">Confirm ${v.toLowerCase()}</button><button class="btn sm" data-keep>Keep</button></div></div>`;
+  }
+  const second=o.s==="Paid"?["Refund","undo-2"]:o.s==="Pending"?["Cancel","circle-x"]:null;
+  return `<div class="acts"><button class="btn sm" data-view="${o.id}">${icon("eye")}View</button>`+
+    (second?`<button class="link" data-ask="${second[0]}" data-id="${o.id}" aria-label="${second[0]} order ${o.id}">${icon(second[1])}${second[0]}</button>`:`<span></span>`)+`</div>`;
+}
+function render(){
+  const q=st.q.trim().toLowerCase();
+  const list=data.filter(o=>(st.all==="all"||o.s===st.all)&&(!q||o.id.toLowerCase().includes(q)||o.c.toLowerCase().includes(q)));
+  $("#rows").innerHTML=list.map(o=>`<tr class="${o.s==="Pending"?"is-pending":""}"><td><a class="oid" href="#">${o.id}</a></td><td class="cust">${o.c}</td><td class="date-c">${o.d}</td><td class="num total">${o.t}</td><td><span class="badge ${cls[o.s]}">${icon(ico[o.s],true)}${o.s}</span></td><td>${actions(o)}</td></tr>`).join("");
+  $("#empty").hidden=list.length>0;
+  document.querySelector("table").style.display=list.length?"":"none";
+  const filtered=st.all!=="all"||q;
+  $("#count").innerHTML=filtered?`Showing <b>${list.length}</b> matching of <b>${data.length}</b> orders on this page`:`Showing <b>1-5</b> of <b>248</b> orders`;
+}
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2400)}
+$("#q").addEventListener("input",e=>{st.q=e.target.value;render()});
+document.querySelectorAll(".segs button").forEach(b=>b.addEventListener("click",()=>{st.all=b.dataset.s;document.querySelectorAll(".segs button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()}));
+$("#clear").addEventListener("click",()=>{st.all="all";st.q="";$("#q").value="";document.querySelectorAll(".segs button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.s==="all"));render()});
+$("#rows").addEventListener("click",e=>{
+  const a=e.target.closest("[data-ask]"),k=e.target.closest("[data-keep]"),d=e.target.closest("[data-do]"),v=e.target.closest("[data-view]");
+  if(a){st.confirm={id:a.dataset.id,kind:a.dataset.ask};render();const b=document.querySelector("[data-keep]");b&&b.focus()}
+  else if(k){st.confirm=null;render()}
+  else if(d){const o=data.find(x=>x.id===d.dataset.do);if(d.dataset.k==="Refund"){o.s="Refunded";toast(`Refund issued for ${o.id} (simulated)`)}else toast(`Cancellation sent for ${o.id} (simulated)`);st.confirm=null;render()}
+  else if(v){toast(`Opening order ${v.dataset.view} (simulated)`)}
+});
+$("#export").addEventListener("click",()=>toast("Exporting CSV (simulated)"));
+$("#next").addEventListener("click",()=>toast("Next page not available in this prototype"));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&st.confirm){st.confirm=null;render()}});
+render();
+</script>
+</body>
+</html>
