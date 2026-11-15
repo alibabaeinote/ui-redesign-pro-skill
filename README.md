@@ -21,6 +21,7 @@ Give it a screen (image, Figma link, HTML or description) and a short brief. Say
 - `ui-redesign-pro/references/`: design systems, typography and color, pattern libraries, trend research, and the pixel-perfect checklist.
 - `examples/`: report template (case studies to come).
 - `docs/`: pipeline diagram and the evaluation protocol.
+- `evaluation/`: kit to test the skill against a plain prompt (blind rating, measured items).
 - `scripts/validate.py`: package checks, also run in CI.
 
 ### License
@@ -45,6 +46,7 @@ MIT. See `LICENSE`.
 - `ui-redesign-pro/references/`: سیستم‌های طراحی، تایپوگرافی و رنگ، کتابخانه‌ی الگوها، پژوهش ترند و چک‌لیست پیکسل‌دقیق.
 - `examples/`: قالب سند مدیران (نمونه‌های واقعی بعداً اضافه می‌شود).
 - `docs/`: نمودار مسیر کار و پروتکل ارزیابی.
+- `evaluation/`: کیت آزمون اسکیل در برابر پرامپت ساده (امتیازدهی کورکورانه و معیارهای اندازه‌گیری‌شده).
 - `scripts/validate.py`: بررسی خودکار بسته، در CI هم اجرا می‌شود.
 
 ### مجوز

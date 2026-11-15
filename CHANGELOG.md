@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added `evaluation/` kit (briefs, prompts, blinding and aggregation scripts, self-test in CI). No results yet.
+
 Format: [Semantic Versioning](https://semver.org). MAJOR = the Commitment (A4) or the output structure changes. MINOR = a new step or rule. PATCH = wording or fixes.
 
 ## 0.9.0 - 2026-11-15
