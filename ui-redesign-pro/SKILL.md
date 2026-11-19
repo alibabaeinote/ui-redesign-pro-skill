@@ -1,6 +1,6 @@
 ---
 name: "ui-redesign-pro"
-description: "Designs new UI or redesigns screens (Persian RTL-native or LTR) in five stages: evaluate current visual usability, list the serious problems, generate three strongly different solutions, combine the best and improve every level, then write a short management defense document."
+description: "Designs new UI or redesigns screens (Persian RTL-native or LTR) in five stages: evaluate current visual usability, list serious problems, generate three strongly different solutions, combine the best and improve every level, then write a short management defense document."
 ---
 
 # UI Redesign Pro (formerly Pixel Perfect UI / modern-ui-design)
@@ -51,7 +51,7 @@ Default AI output has a dated look: purple-blue gradients, one font everywhere, 
 
 Everything speaks as: **refined, hierarchical, gestalt-driven, pixel-perfect**. When two valid choices compete, pick the quieter, clearer, more exact one.
 
-- **Refined:** few colors, weights and shapes. Contrast comes from scale and tone, not decoration. A detail stays only if it carries meaning or identity.
+- **Refined:** few colors, weights and shapes. Contrast comes from scale and tone, not decoration. A detail stays only if it carries meaning or identity. **Quiet means fewer elements, never paler ones.** Tonal-on-tonal pastel (a tint on a tint, a thin pale icon on a pale panel) is a defect, not refinement: every card keeps one strong anchor (a dark or saturated value) that the eye can lock onto. Contrast floors (4.2 item 6) always beat the preference for quiet.
 - **Hierarchical:** one focal point, one primary action, ordered secondary and tertiary levels. Visual weight matches importance.
 - **Gestalt:** organize by proximity first (gaps inside a group smaller than gaps between groups), then similarity, common region (a container only where proximity fails), alignment, figure/ground, closure, simplicity.
 - **Pixel-perfect:** every value comes from a scale, every size is proportionate to siblings and screen, and it is checked at real size.
@@ -188,7 +188,7 @@ In this order, and write down what changed:
 3. **Re-weigh.** Visual weight must match importance. Fix inversions (decoration louder than the primary action, secondary text as heavy as headings).
 4. **Recognizable components.** Buttons look like buttons, inputs like inputs; default, selected, disabled and focus states are distinct. Unclear icons get labels.
 5. **Legibility and scanning.** Readable sizes and line-height, short lines (about 45 to 75 characters), aligned edges, grouping by space, key data (numbers, status, dates, prices) prominent.
-6. **Contrast, computed** with the tool in Part I. Primary text and key actions aim for 7:1 or more, secondary text at least 4.5:1, icons, control borders and focus rings at least 3:1. Decorative hairlines are exempt but must not carry meaning. Never rely on color alone.
+6. **Contrast, computed for text AND shapes** with the tool in Part I, on every pair including surfaces. Primary text and key actions 7:1 or more; secondary text at least 4.5:1; icons, control borders, focus rings and the fill of anything the user must find (play button, avatar, badge, bookmark) at least 3:1 against what is directly behind them. Surface steps (card on page, panel on card, chip on card): either a fill step of at least 1.25:1 or a 1px border; any tonal-on-tonal pair under 1.15:1 counts as invisible and must be fixed, not defended as subtle. Decorative hairlines may be lighter but must not carry meaning and stay visible (at least 1.3:1 to their surface). Never rely on color alone. Sample the colors from the rendered screenshot, not only from the token values.
 7. **Ergonomics.** Targets at least 44x44pt (iOS), 48x48dp (Android) or 24x24 CSS px (WCAG 2.2 AA floor), larger for primary actions; spacing between targets; one-hand reach; destructive actions separated and confirmed or undoable.
 8. **Component and navigation upgrade (inside the fixed skeleton).** Swap or redesign components and local navigation paths without changing the skeleton chosen in 4.1. If you find a skeleton-level problem, go back to 4.1 once, fix it there, and continue. For each component and each navigation path ask: is this the best-practice choice for its job? Redesign or replace it when a numbered problem justifies it (usability, learnability, findability). Check that every function is still reachable, that frequent tasks take no more steps than before (count them), that labels are visible and first-use guidance exists where learnability was weak, and that navigation answers where am I, where can I go and how do I go back. Record each replacement as before, after, reason and source (for example Nielsen, WCAG, Material, HIG, Baymard); cite only sources you opened.
 
@@ -264,6 +264,8 @@ Create a new design system for the redesign unless the user says to follow the c
 **Figma:**
 - Order: foundations (Variables, text and effect styles), then components, then screens, then interactions; check each stage with a screenshot.
 - Bind colors, text, spacing and radius to variables and styles; no detached instances; layers named in slash-separated form.
+- Default frames show the resting state only: no focus ring, hover tint, selection outline or debug stroke may leak into the default variant (a focus-visible ring appears only in its own state frame).
+- Measure through the Figma API, do not eyeball: use `use_figma` to read the absolute bounds (x, y, width, height) of every node in each screen and feed them to the geometry audit in 4.8 item 2.
 - When the originals come from Figma, read them with get_design_context, get_metadata and get_screenshot; if they are images, place them as labeled reference frames.
 - **Interactive builds:** use interactive components, variants and variables so the prototype behaves like the product: inputs and validation, toggles, tabs, filters, overlays, loading to success or error, sticky or collapsing bars, multi-step flows. Use proper triggers, conditional logic, Smart Animate with the motion tokens. Every behavior in the Inventory gets a working interaction or a documented simulation (state which data and outcomes are simulated). Document an **Interaction Map** (trigger, action, result, motion token) and walk every path in preview. If a needed interaction cannot be created, build what is possible, list what could not be wired and why, and offer a coded prototype as an optional extra in the delivery note.
 - **File pages:** 1 Cover (name, version, locale mode, change level, interaction mode), 2 Original, 3 Audit, 4 Explorations, 5 Foundations, 6 Components, 7 Screens, 8 Flow and Prototype, 9 Handoff (includes the management report from 5.2), 10 QA.
@@ -279,7 +281,14 @@ Create a new design system for the redesign unless the user says to follow the c
 Run the applicable sections of `references/pixel-perfect-checklist.md`. If you cannot render or inspect, compute from the code or Figma values and label the result "computed, not rendered". In this order:
 
 1. **Proportion and scale.** Repeated items share dimensions; control heights from one family (for example 40/48/56); adjacent type roles differ by a real ratio, never by 1 to 2px; icon size about 1.0 to 1.3 times label size; nested radius equals outer radius minus padding.
-2. **Alignment and geometry.** Shared guides, no one-off values, no 1px offsets, optical corrections where needed.
+2. **Alignment and geometry: a numeric audit, zero tolerance.** Dump the absolute bounds of every node per screen (Figma: `use_figma`; web: getBoundingClientRect) and run these checks in code, listing each defect with node name and delta:
+   - Every x, y, width and height is an integer and on the spacing scale; named exceptions only.
+   - Edges that are meant to align (a column of rows, card insets, section titles, dividers) differ by exactly 0px; any 1 to 3px deviation is a defect.
+   - No unintended overlap between sibling bounding boxes. Overlays (badge, bookmark, audio pill) are allowed only on the whitelist and must never cover the focal subject or placeholder glyph of the image beneath them.
+   - Overlay controls on one container share one inset from the container edge (mirrored in RTL) and sit in corners or safe bands.
+   - Icon and text in a row: vertical center delta at most 0.5px; multi-line rows share the first baseline. Left and right inner margins of a container are equal unless the asymmetry is intended and named.
+   - Header, row and card edges meet the same outer margin (one value, for example 16 or 20).
+   Fix and re-run until the defect list is empty.
 3. **Spacing audit, always in the output.** Read real margin and padding values (Figma properties, or computed styles from the DOM) and deliver a compact table: edge margins, padding per container type, gaps inside groups, between groups, between sections. Run the scale check on every value and fix or name each exception. Same component type means identical padding everywhere; inner padding never exceeds the gap to a neighbour; left and right margins match. A static graphic with no spacing writes "not applicable".
 4. **Micro-detail consistency.** Same stroke, radius, border width, shadow logic and icon grid.
 5. **States and real content.** Every state from 1.3 is drawn or explicitly deferred. Test short and long names, big numbers, mixed-direction text, missing images.
@@ -287,11 +296,23 @@ Run the applicable sections of `references/pixel-perfect-checklist.md`. If you c
 
 An exception to any rule must be intentional and nameable.
 
+## 4.8b Negative space, composition and the flawless gate
+
+White space is designed, measured and reported like any other value.
+
+- **Proximity ratio.** The gap between groups is at least 1.5 times the gap inside a group; the gap between sections is at least 2 times the gap between groups. Adjacent spacing levels differ by a visible step, never 4px versus 8px.
+- **Margins and padding.** One outer screen margin. Card inner padding at least 16 and never smaller than the largest inner gap. Nothing touches its container edge (at least 12px).
+- **Whitespace budget (heuristic, label it as such).** Measure the share of empty (background-colored) pixels inside the content region of each rendered screen and report it. About 35 to 55 percent reads calm for list and detail screens; under 30 reads cramped and over 65 reads sparse. Outside the range, justify or fix.
+- **Elements per card.** At most 7 distinct elements per card or row; beyond that, group, demote to the detail screen, or remove.
+- **Placeholders are designed states.** An empty photo or avatar gets its own treatment (initials or an illustration on a strong tonal anchor, glyph at least 3:1), drawn at the same quality as real content, never a pale box with a thin outline icon.
+- **Aesthetic bar.** Put each key screen next to 2 or 3 benchmark references at the same scale, write the 3 sharpest gaps (hierarchy, contrast, rhythm, restraint), fix them, and repeat once.
+- **Flawless gate (definition of done).** Do not deliver while any list is non-empty: contrast failures, alignment defects, unintended overlaps, off-scale spacing values, whitespace outside the range without a justification, leaked states in default frames. Report the final counts (all zero) in the Parity and metrics section.
+
 ## 4.9 Checks and review
 
 1. **Parity Check (redesign):** original versus redesigned inventory; every row matches or is flagged. Components may differ; content meaning and functions may not. Reworded microcopy is listed per 4.3.
 2. **Contrast and size:** computed ratios for every text and UI pair; target sizes and minimum font sizes. Latin floors: body not below 16px web or 17pt iOS, captions not below 12px or 11pt. Persian floors are in Part H. Check status colors and charts under color-vision-deficiency simulation.
-3. **Render check:** screenshots at actual size and zoomed; fix misalignment, clipping, overflow, uneven spacing. Mode FA adds: broken shaping, wrong text direction, font substitution, clipped dots, left-heavy weight, bidi errors.
+3. **Render loop (at least 2 full passes).** Export every screen at 2x. Inspect the whole frame, then zoomed tiles (about a quarter of a screen each) of every card, header, control and overlay, the way a reviewer zooms in. Log defects D1 to Dn with location and cause (misalignment, clipping, overflow, uneven spacing, collision, low contrast, leaked state), fix them, re-render, and repeat until a complete pass finds zero. State the number of passes in the delivery note. Never deliver after a single pass. Mode FA adds: broken shaping, wrong text direction, font substitution, clipped dots, left-heavy weight, bidi errors.
 4. **Binding check:** no hardcoded fills, strokes, radii, spacing or text properties outside variables and styles.
 5. **Interaction check (when interactive):** every path in the Interaction Map runs in preview.
 6. **Token-swap test:** change brand hue, base font, radius scale and spacing unit, and test light and dark; the design must stay coherent.
